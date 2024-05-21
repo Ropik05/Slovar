@@ -1,3 +1,4 @@
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,7 +21,6 @@ public class Menu {
             "1. Найти по ключу", "2. Добавить слово", "3. Удалить слово",
             "4. Вывод всего словаря", "5. Другой файл","6. Назад"
     );
-
     public Menu() throws IOException {
         try {
             File latinFile = new File("latinFile.txt");
@@ -58,9 +58,10 @@ public class Menu {
         scanner = new Scanner(System.in);
     }
 
-    private void operMenu(AbsDictionary dictionary){
+    private void operMenu(Diction dictionary){
         System.out.println();
         boolean flag = true;
+        scanner = new Scanner(System.in);
         while(flag){
             try{
                 operMenuMess.forEach(System.out::println);
@@ -108,13 +109,36 @@ public class Menu {
         }
 
     }
+    public void getFromFile(String path, Diction dictionaru){
+        try{
+            if(!path.matches(".*txt$"))
+                throw new RuntimeException("Недопустимый тип файла\n Возможные типы файлов: .txt");
+            else{
+                dictionaru.setPath(path);
+                operMenu(dictionaru);
+            }
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public void start(){
         while (true){
+            scanner = new Scanner(System.in);
             mainMenuMess.forEach(System.out::println);
             switch (scanner.nextLine()){
                 case ("1"):
-                    operMenu(numDictionary);
+                    System.out.println("Введите имя файла со словарем");
+                    String path = scanner.nextLine();
+                    if(!path.matches(".*txt$"))
+                        throw new RuntimeException("Недопустимый тип файла\n Возможные типы файлов: .txt");
+                    else {
+                        try {
+                            numDictionary = new NumDictionary(path);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
                     break;
                 case ("2"):
                     operMenu(latinDictionary);

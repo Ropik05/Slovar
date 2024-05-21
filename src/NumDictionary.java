@@ -1,6 +1,6 @@
 import java.io.IOException;
 
-public class NumDictionary extends AbsDictionary{
+public class NumDictionary extends Diction{
     public NumDictionary(String path) throws IOException {
         super(path);
     }

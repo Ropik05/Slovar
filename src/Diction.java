@@ -1,15 +1,12 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class AbsDictionary {
+public abstract class Diction {
     private Map<String,String> dictionary = new HashMap<String,String>();
     private String path;
 
-    public AbsDictionary(String path) throws IOException {
+    public Diction(String path) throws IOException {
         this.path = path;
         fill(path);
     }

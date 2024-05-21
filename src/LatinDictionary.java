@@ -1,6 +1,6 @@
 import java.io.IOException;
 
-public class LatinDictionary extends AbsDictionary{
+public class LatinDictionary extends Diction{
 
     public LatinDictionary(String path) throws IOException {
         super(path);
