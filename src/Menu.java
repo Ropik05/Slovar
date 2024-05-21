@@ -19,44 +19,8 @@ public class Menu {
 
     private final List<String> operMenuMess = Arrays.asList(
             "1. Найти по ключу", "2. Добавить слово", "3. Удалить слово",
-            "4. Вывод всего словаря", "5. Другой файл","6. Назад"
+            "4. Вывод всего словаря","5. Назад"
     );
-    public Menu() throws IOException {
-        try {
-            File latinFile = new File("latinFile.txt");
-            File numFile = new File("numFile.txt");
-
-            if(!latinFile.exists() && !numFile.exists()){
-                File latin = new File("BaseLatinFile.txt");
-                File num = new File("BaseNumFile.txt");
-                latin.createNewFile();
-                num.createNewFile();
-                latinDictionary = new LatinDictionary(latin.getPath());
-                numDictionary = new NumDictionary(num.getPath());
-            }
-            else if (!latinFile.exists()) {
-                File def = new File("defaultLatinFile.txt");
-                def.createNewFile();
-                latinDictionary = new LatinDictionary(def.getPath());
-                numDictionary = new NumDictionary("numFile.txt");
-            } else if (!numFile.exists()) {
-                File def = new File("defaultNumFile.txt");
-                def.createNewFile();
-                numDictionary = new NumDictionary(new File("defaultNumFile.txt").getPath());
-                latinDictionary = new LatinDictionary("latinFile.txt");
-            } else {
-                latinDictionary = new LatinDictionary("latinFile.txt");
-                numDictionary = new NumDictionary("numFile.txt");
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("Default file not found: " + e.getMessage());
-        } catch (IOException e) {
-            System.out.println("An IO error occurred: " + e.getMessage());
-        } catch (Exception e) {
-            System.out.println("An error occurred: " + e.getMessage());
-        }
-        scanner = new Scanner(System.in);
-    }
 
     private void operMenu(Diction dictionary){
         System.out.println();
@@ -94,7 +58,7 @@ public class Menu {
                     case ("4"):
                         System.out.println(dictionary);
                         break;
-                    case ("6"):
+                    case ("5"):
                         flag = false;
                         break;
                     default:
