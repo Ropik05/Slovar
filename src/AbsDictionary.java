@@ -5,11 +5,11 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Dictionary {
+public abstract class AbsDictionary {
     private Map<String,String> dictionary = new HashMap<String,String>();
     private String path;
 
-    public Dictionary(String path) throws IOException {
+    public AbsDictionary(String path) throws IOException {
         this.path = path;
         fill(path);
     }
@@ -68,6 +68,7 @@ public abstract class Dictionary {
         }
         return true;
     }
+
 
     public boolean save(){
         return save(getPath());
