@@ -94,9 +94,6 @@ public class Menu {
                     case ("4"):
                         System.out.println(dictionary);
                         break;
-                    case ("5"):
-                        dictionary.setPath(scanner.nextLine());
-                        break;
                     case ("6"):
                         flag = false;
                         break;
@@ -109,17 +106,26 @@ public class Menu {
         }
 
     }
-    public void getFromFile(String path, Diction dictionaru){
-        try{
-            if(!path.matches(".*txt$"))
-                throw new RuntimeException("Недопустимый тип файла\n Возможные типы файлов: .txt");
-            else{
-                dictionaru.setPath(path);
-                operMenu(dictionaru);
-            }
-        } catch (RuntimeException e) {
-            throw new RuntimeException(e);
+    public boolean checkFile(String path){
+        File baseFile = new File(path);
+        if(baseFile.exists()){
+            return true;
         }
+        else{
+            System.out.println("Желаете создать файл с таким именем?(Да/Нет)");
+            String x = scanner.nextLine();
+            if (x.equals("Да")|| x.equals("да")){
+                File def = new File(path);
+                try {
+                    def.createNewFile();
+                    return true;
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            else if(x.equals("Нет")|| x.equals("нет")) return false;
+        }
+        return false;
     }
 
     public void start(){
@@ -134,14 +140,32 @@ public class Menu {
                         throw new RuntimeException("Недопустимый тип файла\n Возможные типы файлов: .txt");
                     else {
                         try {
-                            numDictionary = new NumDictionary(path);
+                            if(checkFile(path)) {
+                                numDictionary = new NumDictionary(path);
+                                operMenu(numDictionary);
+                            }
+                            else {
+                                System.out.println("Данный файл не существует");
+                                break;
+                            }
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
                     }
                     break;
                 case ("2"):
-                    operMenu(latinDictionary);
+                    System.out.println("Введите имя файла со словарем");
+                    path = scanner.nextLine();
+                    if(!path.matches(".*txt$"))
+                        throw new RuntimeException("Недопустимый тип файла\n Возможные типы файлов: .txt");
+                    else {
+                        try {
+                            latinDictionary = new LatinDictionary(path);
+                            operMenu(latinDictionary);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
                     break;
                 case("3"):
                     System.out.println("Словарь с цифрами");

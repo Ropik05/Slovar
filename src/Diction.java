@@ -15,9 +15,6 @@ public abstract class Diction {
         return path;
     }
 
-    public void setPath(String path) {
-        this.path = path;
-    }
 
     public abstract String getRagex();
     public boolean add(String key, String val){
