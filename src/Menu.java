@@ -13,11 +13,11 @@ public class Menu {
     private Scanner scanner;
 
     private final List<String> mainMenuMess = Arrays.asList(
-            "1. Словарь чисел", "2. Словарь с латинскими буквами","3. Показать содержимое обоих словарей",
+            "1. Словарь чисел", "2. Словарь с латинскими словами","3. Показать содержимое обоих словарей",
             "4. Выход"
     );
 
-    private final List<String> operMenuMess = Arrays.asList(
+    private final List<String> openMenuMess = Arrays.asList(
             "1. Найти по ключу", "2. Добавить слово", "3. Удалить слово",
             "4. Вывод всего словаря","5. Назад"
     );
@@ -28,7 +28,7 @@ public class Menu {
         scanner = new Scanner(System.in);
         while(flag){
             try{
-                operMenuMess.forEach(System.out::println);
+                openMenuMess.forEach(System.out::println);
                 switch (scanner.nextLine()) {
                     case ("1"):
                         System.out.print("Введите ключ: ");
@@ -108,7 +108,11 @@ public class Menu {
                         try {
                             if(checkFile(path)) {
                                 numDictionary = new NumDictionary(path);
-                                operMenu(numDictionary);
+                                if(numDictionary.worked) {
+                                    operMenu(numDictionary);
+                                }
+                                else
+                                    break;
                             }
                             else {
                                 System.out.println("Данный файл не существует(с указанием типа файла)");
@@ -130,7 +134,11 @@ public class Menu {
                         try {
                             if (checkFile(path)) {
                                 wordDictionary = new WordDiction(path);
-                                operMenu(wordDictionary);
+                                if(wordDictionary.worked) {
+                                    operMenu(wordDictionary);
+                                }
+                                else
+                                    break;
                             } else {
                                 System.out.println("Данный файл не существует(с указанием типа файла)");
                                 break;

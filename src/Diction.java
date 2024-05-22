@@ -15,12 +15,15 @@ public abstract class Diction {
         return path;
     }
     private String type;
+    public boolean worked;
 
     public abstract String getEx();
     public abstract String getRagex();
     public boolean add(String key, String val){
         if(!key.matches(getRagex()) || dictionary.containsKey(key)){
-            throw new IllegalArgumentException("Формат ключа " + key + " не подходит для данного словаря \n "+ getEx() );
+            worked = false;
+            System.err.println("Формат ключа " + key + " не подходит для данного словаря \n "+ getEx() );
+            return false;
         }
         dictionary.put(key, val);
         return true;
@@ -42,6 +45,7 @@ public abstract class Diction {
 
     public void fill(String path) throws IOException {
         try (FileReader reader = new FileReader(path)) {
+            worked = true;
             BufferedReader bufferedReader = new BufferedReader(reader);
             String line;
             while ((line = bufferedReader.readLine()) != null) {
