@@ -14,12 +14,13 @@ public abstract class Diction {
     public String getPath() {
         return path;
     }
+    private String type;
 
-
+    public abstract String getEx();
     public abstract String getRagex();
     public boolean add(String key, String val){
         if(!key.matches(getRagex()) || dictionary.containsKey(key)){
-            throw new IllegalArgumentException("Формат слова " + key + " не подходит для данного словаря" );
+            throw new IllegalArgumentException("Формат ключа " + key + " не подходит для данного словаря \n "+ getEx() );
         }
         dictionary.put(key, val);
         return true;

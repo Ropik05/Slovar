@@ -7,13 +7,13 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
-    private LatinDictionary latinDictionary;
+    private WordDiction wordDictionary;
     private NumDictionary numDictionary;
 
     private Scanner scanner;
 
     private final List<String> mainMenuMess = Arrays.asList(
-            "1. Словарь с цифрами", "2. Словарь с латинскими буквами","3. Показать содержимое обоих словарей",
+            "1. Словарь чисел", "2. Словарь с латинскими буквами","3. Показать содержимое обоих словарей",
             "4. Выход"
     );
 
@@ -98,10 +98,12 @@ public class Menu {
             mainMenuMess.forEach(System.out::println);
             switch (scanner.nextLine()){
                 case ("1"):
-                    System.out.println("Введите имя файла со словарем");
+                    System.out.println("Введите имя файла со словарем(с указанием типа файла)");
                     String path = scanner.nextLine();
-                    if(!path.matches(".*txt$"))
-                        throw new RuntimeException("Недопустимый тип файла\n Возможные типы файлов: .txt");
+                    if(!path.matches(".*txt$")) {
+                        System.out.println("Недопустимый тип файла\n Возможные типы файлов: .txt");
+                        break;
+                    }
                     else {
                         try {
                             if(checkFile(path)) {
@@ -109,7 +111,7 @@ public class Menu {
                                 operMenu(numDictionary);
                             }
                             else {
-                                System.out.println("Данный файл не существует");
+                                System.out.println("Данный файл не существует(с указанием типа файла)");
                                 break;
                             }
                         } catch (IOException e) {
@@ -120,22 +122,29 @@ public class Menu {
                 case ("2"):
                     System.out.println("Введите имя файла со словарем");
                     path = scanner.nextLine();
-                    if(!path.matches(".*txt$"))
-                        throw new RuntimeException("Недопустимый тип файла\n Возможные типы файлов: .txt");
+                    if(!path.matches(".*txt$")) {
+                        System.out.println("Недопустимый тип файла\n Возможные типы файлов: .txt");
+                        break;
+                    }
                     else {
                         try {
-                            latinDictionary = new LatinDictionary(path);
-                            operMenu(latinDictionary);
+                            if (checkFile(path)) {
+                                wordDictionary = new WordDiction(path);
+                                operMenu(wordDictionary);
+                            } else {
+                                System.out.println("Данный файл не существует(с указанием типа файла)");
+                                break;
+                            }
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
                     }
-                    break;
+                        break;
                 case("3"):
                     System.out.println("Словарь с цифрами");
                     System.out.println(numDictionary);
                     System.out.println("Словарь с латинскими буквами");
-                    System.out.println(latinDictionary);
+                    System.out.println(wordDictionary);
                     break;
                 case ("4"):
                     System.exit(0);
